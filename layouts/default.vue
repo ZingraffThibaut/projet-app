@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       clipped: true,
-      drawer: false,
+      drawer: true,
       fixed: false,
       items: [
         {
@@ -67,17 +67,12 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Login',
-          to: '/Login'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Thibaut Zingraff'
+      title: 'TZ games'
     }
   }
 }
