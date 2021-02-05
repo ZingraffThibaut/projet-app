@@ -9,10 +9,15 @@
           offset-md="4"
           offset-sm="3"
           >
-              <v-text-field label="Ville"></v-text-field>
+            <v-text-field
+            label="Ville"
+            v-model="query"
+            v-on:keyup.enter="fetchWeather"
+            clearable
+            ></v-text-field>            
           </v-col>
       </v-row>
-        {{ weather }}
+
       <v-row>
             <v-col
             cols="12"
@@ -29,7 +34,7 @@
                         <v-list-item-title class="headline">
                         {{ city.name }}
                         </v-list-item-title>
-                        <v-list-item-subtitle>{{ dateBuilder(new Date) }}, {{ weather.weather[0].description }}</v-list-item-subtitle>
+                        <v-list-item-subtitle v-if=weather.weather>{{ dateBuilder(new Date) }}, {{ weather.weather[0].description }}</v-list-item-subtitle>
                     </v-list-item-content>
                     </v-list-item>
 
@@ -38,15 +43,17 @@
                         <v-col
                         class="display-3"
                         cols="6"
+                        v-if=weather.main
                         >
-                        {{ Math.round(weather.main.temp) }}&deg;C
+                            {{ Math.round(weather.main.temp) }}&deg;C
                         </v-col>
                         <v-col cols="6">
-                        <v-img
-                            src="https://cdn.vuetifyjs.com/images/cards/sun.png"
-                            alt="Sunny image"
-                            width="92"
-                        ></v-img>
+                            <v-img
+                                v-if="weather.weather"
+                                :src="`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`"
+                                alt="Sunny image"
+                                width="92"
+                            ></v-img>
                         </v-col>
                     </v-row>
                     </v-card-text>
@@ -55,14 +62,14 @@
                     <v-list-item-icon>
                         <v-icon>mdi-send</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-subtitle>{{ Math.round(weather.wind.speed*3.6) }} km/h</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if=weather.wind>{{ Math.round(weather.wind.speed*3.6) }} km/h</v-list-item-subtitle>
                     </v-list-item>
 
                     <v-list-item>
                     <v-list-item-icon>
                         <v-icon>mdi-cloud-download</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-subtitle>{{weather.main.humidity}}%</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if=weather.main>{{weather.main.humidity}}%</v-list-item-subtitle>
                     </v-list-item>
 
 
@@ -115,11 +122,18 @@ export default {
         fetchWeather (e){
             if (e.key == "Enter"){
                 axios
-                .get(`${this.url_base}weather?q=${this.query}&lang=fr&appid=${this.key}`)
+                .get(`${this.url_base}weather?q=${this.query}&lang=fr&units=metric&appid=${this.key}`)
                 .then((reponse) => {
+                    this.weather = reponse.data;
                     this.city.name = reponse.data.name;
                     this.city.lat = reponse.data.coord.lat;
                     this.city.lon = reponse.data.coord.lon;
+                });
+
+                axios
+                .get(`${this.url_base}onecall?lat=${this.city.lat}&lon=${this.city.lon}&exclude=current,minutely,hourly,alerts&lang=fr&units=metric&appid=${this.key}`)
+                .then((reponse) => {
+                    this.daily = reponse.data;
                 });
             }
         },
@@ -138,5 +152,7 @@ export default {
 </script>
 
 <style>
-
+.v-card{
+    background: rgba(220,220,220,0.75) !important;
+}
 </style>

@@ -6,6 +6,8 @@
         <v-col
         cols="12"
         md="3"
+        sm="6"
+        xs="12"
         v-for="work in works" :key="work.id"
         class="work"
         >
@@ -26,9 +28,7 @@
                 </v-card-subtitle>
 
                 <v-card-text class="text--primary">
-                <div>{{ work.name }}</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
+                <div>{{ work.description }}</div>
                 </v-card-text>
 
                 <v-card-actions>
@@ -57,72 +57,9 @@ export default {
                 id: 1,
                 img: 'weather.jpg',
                 title: 'Station météo',
-                name: '',
+                description: 'Vue js / Axio / Vuetify',
                 to: '/station-meteo',
             },
-            {
-                id: 2,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 3,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 4,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 5,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 6,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 7,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 8,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 9,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            },
-            {
-                id: 10,
-                img: 'weather.jpg',
-                title: 'Site Food',
-                name: '',
-                to: '',
-            }
             ],
         }
     }
