@@ -1,8 +1,9 @@
 <template>
-  <v-app dark>
+  <v-app>
+    <!-- Left Menu -->
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
+      disable-resize-watcher
       :clipped="clipped"
       fixed
       app
@@ -24,29 +25,35 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <!-- Top bar -->
     <v-app-bar
       :clipped-left="clipped"
-      fixed
       app
+      flat
+      
+      color="rgb(255,255,255)"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      
+      <v-btn
+        text
+        v-for="(log, i) in logs"
+        :key="i"
+        :to="log.to"
+      >
+        {{log.title}}
+      </v-btn>
     </v-app-bar>
+
+    <!-- Content -->
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
 
-    <v-footer
-      :absolute="!fixed"
-      app
-    >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+  
   </v-app>
 </template>
 
@@ -55,35 +62,40 @@ export default {
   data () {
     return {
       clipped: true,
-      drawer: true,
+      drawer: false,
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-home',
           title: 'Welcome',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-briefcase',
+          title: 'Work',
+          to: '/work'
         },
+      ],
+      logs: [
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Login',
+          icon: 'mdi-home',
+          title: 'log in',
           to: '/login'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Account',
-          to: '/account'
-        }
+          title: 'Sing up',
+          to: '/singup'
+        },
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'TZ games'
+      title: 'Thibaut Zingraff'
     }
   }
 }
 </script>
+
+<style lang="scss">
+#app{
+  font-family: 'Montserrat', sans-serif;
+}
+
+</style>
